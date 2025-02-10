@@ -1,70 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
-  // Button size for calculation (adjust as needed)
-  const buttonWidth = 150;
-  const buttonHeight = 80;
+    // Set some starting states
 
-  // Initial position for the "No" button to be next to the "Yes" button
-  const [noButtonPosition, setNoButtonPosition] = useState({
-    left: 400,  // Set the initial left position to be next to the Yes button
-    top: 0,     // Same vertical position as the Yes button
-  });
+    //setting initial x and y to (52, 55), when set is called, change the values
+    // const [x, setx] = useState(50);
+    // const [y, sety] = useState(52);
 
-  useEffect(() => {
-    // Center the buttons around the center of the screen
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+    const [imageSrc, setImageSrc] = useState("/start.gif");
+    const [isHovered, setIsHovered] = useState(false); // Track hover state
 
-    setNoButtonPosition({
-      left: centerX + buttonWidth / 2 + 20, // Adjust the gap between buttons as needed
-      top: centerY - buttonHeight / 2,
-    });
-  }, []);
+    //Some functions
 
-  // Function to move the "No" button to a random position, within the visible area
-  const moveNoButton = () => {
-    // Get the width and height of the screen
-    const maxX = window.innerWidth - buttonWidth - 20; // Subtract button width to ensure it stays inside screen
-    const maxY = window.innerHeight - buttonHeight - 20; // Subtract button height to ensure it stays inside screen
+    const popUp = () => {
+        alert(
+            "AH look at you, you caught the button. I guess you wanted to say no that badly..."
+        );
+    };
 
-    // Generate random position within the screen bounds
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
+    const clickedYes = () => {
+        alert(
+            "You either couldn't catch the button, or you just wanted to say yes! Hopefully, it's the latter hehe"
+        );
+        setImageSrc("/end.gif");
+    };
 
-    setNoButtonPosition({ left: randomX, top: randomY });
-  };
+    //TODO: fix the random image picker
+    function mouseOver() {
+        if (!isHovered) {
+            setIsHovered(true); // Set to true after the first hover
+        }
 
-  // Handle "Yes" button click
-  const handleYesClick = () => {
-    alert("Yay! I knew you'd say yes! 💖");
-  };
+        const randomImage = Math.random() < 0.5 ? "/val2.gif" : "/val3.gif"; // Randomly pick an image
+        setImageSrc(randomImage); // Update the image source
+        //TODO make sure setx and sety don't go out of bounds of the window screen
+        // setx(Math.random() * 100);
+        // sety(Math.random() * 100);
+        const newX = Math.random() * 85; // Randomize X position
+        const newY = Math.random() * 85; // Randomize Y position
 
-  return (
-    <div className="App">
-      <div className="content">
-        <h1>Will you go on a date with me?</h1>
-        <img src="https://via.placeholder.com/400x200" alt="A romantic Valentine's Day scene" className="image" />
-        
-        <div className="button-container">
-          {/* Yes Button */}
-          <button id="yes-button" onClick={handleYesClick}>
-            Yes
-          </button>
-          
-          {/* No Button */}
-          <button
-            id="no-button"
-            style={{ left: `${noButtonPosition.left}px`, top: `${noButtonPosition.top}px` }}
-            onClick={moveNoButton}
-          >
-            No
-          </button>
+        document.getElementById("no-button").style.left = `${newX}%`;
+        document.getElementById("no-button").style.top = `${newY}%`;
+    }
+
+    // var noStyle = {
+    //   left: x + "%",
+    //   top: y + "%",
+    //   position: "absolute",
+    // };
+
+    // var yesStyle = {
+    //   left: "42%",
+    //   top: "55%",
+    // }
+
+    return (
+        <div className="container">
+            <img src={imageSrc} alt="valentine" className="image" />
+            <p className="valentine" id="yes">
+                Will <b>YOU</b> be my <b>Valentine?</b>
+            </p>
+            <div className="button-container">
+                <button
+                    // style={yesStyle}
+                    type="submit"
+                    onClick={clickedYes}
+                >
+                    YES!
+                </button>
+                <button
+                    onMouseOver={mouseOver}
+                    id="no-button"
+                    onClick={popUp}
+                    className={`${isHovered ? "absolute" : ""}`}
+                >
+                    no
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;
