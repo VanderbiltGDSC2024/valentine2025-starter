@@ -6,7 +6,6 @@ body{
     overflow: hidden;
 }
 
-
 .container { 
     display: flex;
     flex-direction: column; /* Stack elements vertically */
@@ -29,7 +28,6 @@ body{
   z-index: -2;
 }
 
-
 .absolute {
   position: absolute; /* Change to absolute once hovered */
   cursor: pointer; /* Make it clear the button is interactive */
@@ -44,7 +42,6 @@ body{
   justify-content: center; /* Center the buttons horizontally */
   gap: 20px; /* Adds space between the buttons */
 }
-
 
 button {
   margin-top: 20px;
@@ -106,9 +103,8 @@ button:hover {
   outline: 0;
 }
 
-/* earlier words */
+/* header words */
  .valentine{
-  /* position: absolute; */
   justify-content: center;
   text-align: center;
   font-weight: 500;
