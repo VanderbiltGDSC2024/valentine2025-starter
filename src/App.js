@@ -1,5 +1,4 @@
 import "./App.css";
-import { useState } from "react";
 
 function App() {
     // TODO: Set some starting states
